@@ -17,11 +17,14 @@ use function Mos\Functions\getRoutePath;
 // Get a defined to point at the installation directory
 define("INSTALL_PATH", realpath(__DIR__ . "/.."));
 
+// https://github.com/dbwebb-se/mvc/issues/4
+// Get the autoloader
+require INSTALL_PATH . "/vendor/autoload.php";
+
 // Load the inital configuration
 require INSTALL_PATH . "/config/bootstrap.php";
 
-// Get the autoloader
-require INSTALL_PATH . "/vendor/autoload.php";
+
 
 
 

@@ -1,0 +1,11 @@
+ ------ -------------------------------------------------------------------- 
+  Line   src/datalowe/Dice/old_files/DiceGameOld.php                         
+ ------ -------------------------------------------------------------------- 
+  46     Instantiated class dtlw\Dice\ValueError not found.                  
+         💡 Learn more at https://phpstan.org/user-guide/discovering-symbols  
+  46     Throwing object of an unknown class dtlw\Dice\ValueError.           
+         💡 Learn more at https://phpstan.org/user-guide/discovering-symbols  
+ ------ -------------------------------------------------------------------- 
+
+ [ERROR] Found 2 errors                                                                                                 
+

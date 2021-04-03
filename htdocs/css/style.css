@@ -15,3 +15,8 @@ footer {
     min-height: 4em;
     text-align: center;
 }
+
+.die-img {
+    width: 200px;
+    height: auto;
+}

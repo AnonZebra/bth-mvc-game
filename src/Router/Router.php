@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Mos\Router;
 
+use dtlw\Dice\DiceGame as DiceGame;
+
 use function Mos\Functions\{
     destroySession,
     redirectTo,
@@ -28,19 +30,19 @@ class Router
             $body = renderView("layout/page.php", $data);
             sendResponse($body);
             return;
-        } else if ($method === "GET" && $path === "/session") {
+        } elseif ($method === "GET" && $path === "/session") {
             $body = renderView("layout/session.php");
             sendResponse($body);
             return;
-        } else if ($method === "GET" && $path === "/session/destroy") {
+        } elseif ($method === "GET" && $path === "/session/destroy") {
             destroySession();
             redirectTo(url("/session"));
             return;
-        } else if ($method === "GET" && $path === "/debug") {
+        } elseif ($method === "GET" && $path === "/debug") {
             $body = renderView("layout/debug.php");
             sendResponse($body);
             return;
-        } else if ($method === "GET" && $path === "/twig") {
+        } elseif ($method === "GET" && $path === "/twig") {
             $data = [
                 "header" => "Twig page",
                 "message" => "Hey, edit this to do it youreself!",
@@ -48,7 +50,7 @@ class Router
             $body = renderTwigView("index.html", $data);
             sendResponse($body);
             return;
-        } else if ($method === "GET" && $path === "/some/where") {
+        } elseif ($method === "GET" && $path === "/some/where") {
             $data = [
                 "header" => "Rainbow page",
                 "message" => "Hey, edit this to do it youreself!",
@@ -56,11 +58,61 @@ class Router
             $body = renderView("layout/page.php", $data);
             sendResponse($body);
             return;
+        } elseif ($method === "GET" && $path === "/dice") {
+            $body = renderView("layout/dice.php");
+            sendResponse($body);
+            return;
+        } elseif ($method === "GET" && $path === "/blackjack") {
+            // unset($_SESSION["game"]);
+            if (!array_key_exists("game", $_SESSION)) {
+                $_SESSION["game"] = new DiceGame();
+            }
+            $game = $_SESSION["game"];
+            $data = [
+                "scores" => $game->getScores(),
+                "wonRounds" => $game->getWonRounds(),
+                "winner" => $game->getWinnerName(),
+                "roundHasEnded" => $game->roundHasEnded()
+            ];
+            if (array_key_exists("errmsg", $_SESSION)) {
+                $data["errmsg"] = $_SESSION["errmsg"];
+                unset($_SESSION["errmsg"]);
+            }
+            $body = renderView("layout/blackjack.php", $data);
+            sendResponse($body);
+            return;
+        } elseif ($method === "POST" && $path === "/blackjack") {
+            $game = $_SESSION["game"];
+            if (array_key_exists("num-dice", $_POST)) {
+                $numDice = intval($_POST["num-dice"]);
+                try {
+                    // throw new \dtlw\Dice\InvalidNumberOfDice();
+                    $_SESSION["game"] = new DiceGame($numDice);
+                // } catch (dtlw\Dice\InvalidNumberOfDice $e) {
+                } catch (\dtlw\Dice\InvalidNumberOfDice $e) {
+                    $_SESSION["errmsg"] = $e->getMessage();
+                }
+            } elseif (array_key_exists("roll-dice", $_POST)) {
+                $game->rollHumanDice();
+            } elseif (array_key_exists("stay", $_POST)) {
+                $game->autoPlay();
+                $game->endRound();
+            } elseif (array_key_exists("new-round", $_POST)) {
+                $game->newRound();
+            }
+            redirectTo("blackjack");
+            return;
         }
+        // elseif ($method === "POST" && $path === "/blackjack") {
+
+        // }
 
         $data = [
             "header" => "404",
-            "message" => "The page you are requesting is not here. You may also checkout the HTTP response code, it should be 404.",
+            "message" => (
+                "The page you are requesting is not here." .
+                "You may also checkout the HTTP response code, it should be 404."
+            ),
         ];
         $body = renderView("layout/page.php", $data);
         sendResponse($body, 404);

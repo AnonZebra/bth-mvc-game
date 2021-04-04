@@ -86,9 +86,7 @@ class Router
             if (array_key_exists("num-dice", $_POST)) {
                 $numDice = intval($_POST["num-dice"]);
                 try {
-                    // throw new \dtlw\Dice\InvalidNumberOfDice();
                     $_SESSION["game"] = new DiceGame($numDice);
-                // } catch (dtlw\Dice\InvalidNumberOfDice $e) {
                 } catch (\dtlw\Dice\InvalidNumberOfDice $e) {
                     $_SESSION["errmsg"] = $e->getMessage();
                 }
@@ -103,9 +101,6 @@ class Router
             redirectTo("blackjack");
             return;
         }
-        // elseif ($method === "POST" && $path === "/blackjack") {
-
-        // }
 
         $data = [
             "header" => "404",

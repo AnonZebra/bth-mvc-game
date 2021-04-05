@@ -10,6 +10,7 @@ use function Mos\Functions\url;
 
 ?><!doctype html>
 <html>
+<head>
     <meta charset="utf-8">
     <title><?= $title ?? "No title" ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">

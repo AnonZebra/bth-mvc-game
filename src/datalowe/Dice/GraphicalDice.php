@@ -14,15 +14,15 @@ use function Mos\Functions\{
 class GraphicalDice extends Dice
 {
     // number of sides/faces of die
-    protected $numSides = 6;
+    // protected $numSides = 6;
     // result of last roll
-    protected $lastRoll = 4;
 
     /**
     * Constructor
     */
     public function __construct()
     {
+        parent::__construct(6);
     }
     /**
     * Updates the number of die faces.
@@ -37,7 +37,7 @@ class GraphicalDice extends Dice
     public function getFaceImg(): string
     {
         return (
-            getBaseUrl() . "/img/die/die{$this->lastRoll}.svg"
+            getBaseUrl() . "/img/die/die{$this->getLastRoll()}.svg"
         );
     }
 }

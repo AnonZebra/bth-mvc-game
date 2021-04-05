@@ -10,9 +10,9 @@ namespace dtlw\Dice;
 class Dice
 {
     // number of sides/faces of die
-    protected $numSides = 0;
+    private $numSides = 0;
     // result of last roll
-    protected $lastRoll = -1;
+    private $lastRoll;
 
     /**
     * Constructor
@@ -34,7 +34,7 @@ class Dice
     }
 
     /**
-    * Fetchs and returns last roll result.
+    * Fetches and returns last roll result.
     * @return int Roll result.
     */
     public function getLastRoll(): int

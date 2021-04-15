@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace dtlw\Dice;
 
-use dtlw\Dice\GraphicalDice as SingleDie;
+// use dtlw\Dice\GraphicalDice as SingleDie;
+use dtlw\Dice\DieFactory;
 
 /**
 * Class for representing hands of dice.
@@ -16,10 +17,10 @@ class DiceHand
     */
     private $dice = array();
 
-    public function __construct(int $numDice)
+    public function __construct(int $numDice, DieFactory $dieFactory)
     {
         for ($i = 0; $i < $numDice; $i++) {
-            array_unshift($this->dice, new SingleDie());
+            array_unshift($this->dice, $dieFactory->make());
         }
     }
 
@@ -56,10 +57,6 @@ class DiceHand
     */
     public function getLastRollTotal()
     {
-        // $sumInts = function ($rollVal1, $rollVal2): int {
-        //     return $rollVal1 + $rollVal2;
-        // };
-
         return array_reduce(
             $this->getLastRoll(),
             fn($rollVal1, $rollVal2) => $rollVal1 + $rollVal2

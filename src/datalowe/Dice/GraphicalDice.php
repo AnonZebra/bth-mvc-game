@@ -13,10 +13,6 @@ use function Mos\Functions\{
 */
 class GraphicalDice extends Dice
 {
-    // number of sides/faces of die
-    // protected $numSides = 6;
-    // result of last roll
-
     /**
     * Constructor
     */

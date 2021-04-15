@@ -28,11 +28,7 @@ class DiceHand
     */
     public function roll()
     {
-        $makeRoll = function (SingleDie $die): void {
-            $die->roll();
-        };
-
-        array_map($makeRoll, $this->dice);
+        array_map(fn($die) => $die->roll(), $this->dice);
     }
 
     /**
@@ -41,10 +37,7 @@ class DiceHand
     */
     public function getLastRoll(): array
     {
-        $getRoll = function (SingleDie $die): int {
-            return $die->getLastRollTotal();
-        };
-        return array_map($getRoll, $this->dice);
+        return array_map(fn($die) => $die->getLastRollTotal(), $this->dice);
     }
 
     /**
@@ -54,10 +47,7 @@ class DiceHand
     */
     public function getFaceImgs()
     {
-        $getFaceImg = function (SingleDie $die): string {
-            return $die->getFaceImg();
-        };
-        return array_map($getFaceImg, $this->dice);
+        return array_map(fn($die) => $die->getFaceImg(), $this->dice);
     }
 
     /**
@@ -66,10 +56,13 @@ class DiceHand
     */
     public function getLastRollTotal()
     {
-        $sumInts = function ($rollVal1, $rollVal2): int {
-            return $rollVal1 + $rollVal2;
-        };
+        // $sumInts = function ($rollVal1, $rollVal2): int {
+        //     return $rollVal1 + $rollVal2;
+        // };
 
-        return array_reduce($this->getLastRoll(), $sumInts);
+        return array_reduce(
+            $this->getLastRoll(),
+            fn($rollVal1, $rollVal2) => $rollVal1 + $rollVal2
+        );
     }
 }

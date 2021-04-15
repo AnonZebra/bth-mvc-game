@@ -6,7 +6,7 @@ namespace dtlw\Controller;
 
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\ResponseInterface;
-use dtlw\Dice\DiceGame;
+use dtlw\Dice\BlackjackGame;
 
 use function Mos\Functions\{
     url,
@@ -27,7 +27,7 @@ class Game
     public function blackjackShow(): ResponseInterface
     {
         if (!array_key_exists("game", $_SESSION)) {
-            $_SESSION["game"] = new DiceGame();
+            $_SESSION["game"] = new BlackjackGame();
         }
         $game = $_SESSION["game"];
         $data = [
@@ -52,7 +52,7 @@ class Game
         if (array_key_exists("num-dice", $_POST)) {
             $numDice = intval($_POST["num-dice"]);
             try {
-                $_SESSION["game"] = new DiceGame($numDice);
+                $_SESSION["game"] = new BlackjackGame($numDice);
             } catch (\dtlw\Dice\InvalidNumberOfDice $e) {
                 $_SESSION["errmsg"] = $e->getMessage();
             }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Mos\Router;
 
-use dtlw\Dice\DiceGame as DiceGame;
+use dtlw\Dice\BlackjackGame as BlackjackGame;
 
 use function Mos\Functions\{
     destroySession,
@@ -65,7 +65,7 @@ class Router
         } elseif ($method === "GET" && $path === "/blackjack") {
             // unset($_SESSION["game"]);
             if (!array_key_exists("game", $_SESSION)) {
-                $_SESSION["game"] = new DiceGame();
+                $_SESSION["game"] = new BlackjackGame();
             }
             $game = $_SESSION["game"];
             $data = [
@@ -86,7 +86,7 @@ class Router
             if (array_key_exists("num-dice", $_POST)) {
                 $numDice = intval($_POST["num-dice"]);
                 try {
-                    $_SESSION["game"] = new DiceGame($numDice);
+                    $_SESSION["game"] = new BlackjackGame($numDice);
                 } catch (\dtlw\Dice\InvalidNumberOfDice $e) {
                     $_SESSION["errmsg"] = $e->getMessage();
                 }

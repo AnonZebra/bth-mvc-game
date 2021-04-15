@@ -25,4 +25,4 @@ $diceHand->roll();
 <?php foreach ($diceHand->getFaceImgs() as $faceImg) : ?>
     <img class="die-img" src="<?=  $faceImg ?>">
 <?php endforeach; ?>
-<p>Hand total: <?= $diceHand->getRollTotal(); ?> </p>
+<p>Hand total: <?= $diceHand->getLastRollTotal(); ?> </p>

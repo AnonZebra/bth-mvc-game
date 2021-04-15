@@ -14,7 +14,7 @@ use dtlw\Dice\DiceHand as DHand;
 class DiceGamePlayer
 {
     /**
-    * @var DHand $hand This player's hand of dice.
+    * @var DiceHand $hand This player's hand of dice.
     * @var int $score This player's total dice roll score.
     * @var int $wonRounds Number of rounds that this player has won.
     */
@@ -38,7 +38,7 @@ class DiceGamePlayer
     public function roll()
     {
         $this->hand->roll();
-        $this->score += $this->hand->getRollTotal();
+        $this->score += $this->hand->getLastRollTotal();
     }
 
     /**

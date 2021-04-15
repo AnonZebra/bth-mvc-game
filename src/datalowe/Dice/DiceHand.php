@@ -39,10 +39,10 @@ class DiceHand
     * Returns all of the hand's dice's current values.
     * @return int[] Current dice values.
     */
-    public function getRolls(): array
+    public function getLastRoll(): array
     {
         $getRoll = function (SingleDie $die): int {
-            return $die->getLastRoll();
+            return $die->getLastRollTotal();
         };
         return array_map($getRoll, $this->dice);
     }
@@ -64,12 +64,12 @@ class DiceHand
     * Returns the sum of the hand's dice's values.
     * @return int Sum of die values.
     */
-    public function getRollTotal()
+    public function getLastRollTotal()
     {
         $sumInts = function ($rollVal1, $rollVal2): int {
             return $rollVal1 + $rollVal2;
         };
 
-        return array_reduce($this->getRolls(), $sumInts);
+        return array_reduce($this->getLastRoll(), $sumInts);
     }
 }

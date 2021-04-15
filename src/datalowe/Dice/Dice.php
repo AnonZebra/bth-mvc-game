@@ -7,7 +7,7 @@ namespace dtlw\Dice;
 /**
 * Class for representing dice.
 */
-class Dice
+class Dice implements Rollable
 {
     // number of sides/faces of die
     private $numSides = 0;
@@ -27,17 +27,25 @@ class Dice
     * Rolls the die and returns the result.
     * @return int Roll result.
     */
-    public function roll(): int
+    public function roll(): void
     {
         $this->lastRoll = rand(1, $this->numSides);
-        return $this->lastRoll;
     }
 
     /**
-    * Fetches and returns last roll result.
+    * Fetches and returns last roll result, as a one-element array.
+    * @return int[] Roll result.
+    */
+    public function getLastRoll(): array
+    {
+        return [$this->lastRoll];
+    }
+
+    /**
+    * Fetches and returns last roll result, as an integer.
     * @return int Roll result.
     */
-    public function getLastRoll(): int
+    public function getLastRollTotal(): int
     {
         return $this->lastRoll;
     }

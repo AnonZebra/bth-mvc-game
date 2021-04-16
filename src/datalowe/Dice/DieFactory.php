@@ -14,6 +14,7 @@ use dtlw\Dice\GraphicalDice;
 */
 class DieFactory
 {
+    private $numSides;
     private string $dieType;
     private static $validTypes = [
         'graphical',
@@ -24,12 +25,13 @@ class DieFactory
     * @param string dieType A name of the type of die that the
     * factory is to generate. 'graphical' or 'plain'.
     */
-    public function __construct(string $dieType)
+    public function __construct(string $dieType, $numSides = 6)
     {
         if (!in_array($dieType, self::$validTypes)) {
             throw new InvalidDieTypeException();
         }
         $this->dieType = $dieType;
+        $this->numSides = $numSides;
     }
 
     /**
@@ -40,9 +42,9 @@ class DieFactory
     public function make(): Dice
     {
         if ($this->dieType == 'graphical') {
-            return new GraphicalDice();
+            return new GraphicalDice($this->numSides);
         } elseif ($this->dieType == 'plain') {
-            return new Dice();
+            return new Dice($this->numSides);
         }
     }
 }

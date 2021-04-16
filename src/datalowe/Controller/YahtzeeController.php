@@ -52,14 +52,7 @@ class YahtzeeController
     public function yahtzeeProcess(): ResponseInterface
     {
         $game = $_SESSION["yahtzee"];
-        if (array_key_exists("num-dice", $_POST)) {
-            $numDice = intval($_POST["num-dice"]);
-            try {
-                $_SESSION["yahtzee"] = new YahtzeeGame($numDice);
-            } catch (\dtlw\Dice\InvalidNumberOfDice $e) {
-                $_SESSION["errmsg"] = $e->getMessage();
-            }
-        } elseif (array_key_exists("roll-dice", $_POST)) {
+        if (array_key_exists("roll-dice", $_POST)) {
             if (array_key_exists('dice', $_POST)) {
                 $_SESSION["errmsg"] = implode(" : ", $_POST['dice']);
                 $pickedDice = array_map(

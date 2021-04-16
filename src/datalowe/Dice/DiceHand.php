@@ -6,6 +6,7 @@ namespace dtlw\Dice;
 
 // use dtlw\Dice\GraphicalDice as SingleDie;
 use dtlw\Dice\DieFactory;
+use dtlw\Dice\Dice;
 
 /**
 * Class for representing hands of dice.
@@ -13,7 +14,7 @@ use dtlw\Dice\DieFactory;
 class DiceHand
 {
     /**
-    * @var SingleDie[] $dice Array of dice.
+    * @var Dice[] $dice Array of dice.
     */
     private $dice = array();
 
@@ -76,7 +77,6 @@ class DiceHand
     */
     public function getDieValues(): array
     {
-        $dVals;
         try {
             $dVals = array_map(
                 fn($die) => $die->getLastRollTotal(),

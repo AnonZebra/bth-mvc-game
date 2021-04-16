@@ -6,14 +6,14 @@ namespace dtlw\Controller;
 
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\ResponseInterface;
-use dtlw\Dice\BlackjackGame;
+use dtlw\Dice\YahtzeeGame;
 
 use function Mos\Functions\{
     url,
     renderView
 };
 
-class Game
+class YahtzeeController
 {
     public function dice(): ResponseInterface
     {
@@ -24,49 +24,60 @@ class Game
             ->withBody($psr17Factory->createStream($body));
     }
 
-    public function blackjackShow(): ResponseInterface
+    public function yahtzeeShow(): ResponseInterface
     {
-        if (!array_key_exists("game", $_SESSION)) {
-            $_SESSION["game"] = new BlackjackGame();
+        // unset($_SESSION["yahtzee"]);
+        if (!array_key_exists("yahtzee", $_SESSION)) {
+            $_SESSION["yahtzee"] = new YahtzeeGame();
         }
-        $game = $_SESSION["game"];
+        $game = $_SESSION["yahtzee"];
         $data = [
             "scores" => $game->getScores(),
-            "wonRounds" => $game->getWonRounds(),
-            "winner" => $game->getWinnerName(),
-            "roundHasEnded" => $game->roundHasEnded()
+            "roundHasEnded" => $game->roundHasEnded(),
+            "numRollsLeft" => $game->getNumRollsLeft(),
+            "currentRoll" => $game->getCurrentRollNumber(),
+            "dieVals" => $game->getCurrentDieValues(),
+            "goalValue" => $game->getGoalValue()
         ];
         if (array_key_exists("errmsg", $_SESSION)) {
             $data["errmsg"] = $_SESSION["errmsg"];
             unset($_SESSION["errmsg"]);
         }
-        $body = renderView("layout/blackjack.php", $data);
+        $body = renderView("layout/yahtzee.php", $data);
         $psr17Factory = new Psr17Factory();
         return $psr17Factory
             ->createResponse(200)
             ->withBody($psr17Factory->createStream($body));
     }
-    public function blackjackProcess(): ResponseInterface
+    public function yahtzeeProcess(): ResponseInterface
     {
-        $game = $_SESSION["game"];
+        $game = $_SESSION["yahtzee"];
         if (array_key_exists("num-dice", $_POST)) {
             $numDice = intval($_POST["num-dice"]);
             try {
-                $_SESSION["game"] = new BlackjackGame($numDice);
+                $_SESSION["yahtzee"] = new YahtzeeGame($numDice);
             } catch (\dtlw\Dice\InvalidNumberOfDice $e) {
                 $_SESSION["errmsg"] = $e->getMessage();
             }
         } elseif (array_key_exists("roll-dice", $_POST)) {
-            $game->rollHumanDice();
-        } elseif (array_key_exists("stay", $_POST)) {
-            $game->autoPlay();
-            $game->endRound();
+            if (array_key_exists('dice', $_POST)) {
+                $_SESSION["errmsg"] = implode(" : ", $_POST['dice']);
+                $pickedDice = array_map(
+                    fn($x) => intval($x),
+                    $_POST['dice']
+                );
+                $game->rollDice($pickedDice);
+            } else {
+                $game->rollDice();
+            }
+        } elseif (array_key_exists("register", $_POST)) {
+            $game->registerActiveRoll();
         } elseif (array_key_exists("new-round", $_POST)) {
             $game->newRound();
         }
         $psr17Factory = new Psr17Factory();
         return $psr17Factory
             ->createResponse(302)
-            ->withHeader("Location", url("/blackjack"));
+            ->withHeader("Location", url("/yahtzee"));
     }
 }

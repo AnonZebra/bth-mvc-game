@@ -70,4 +70,21 @@ class DiceHand
             fn($rollVal1, $rollVal2) => $rollVal1 + $rollVal2
         );
     }
+
+    /**
+    * @return int[] All of the hand's current/last roll die values.
+    */
+    public function getDieValues(): array
+    {
+        $dVals;
+        try {
+            $dVals = array_map(
+                fn($die) => $die->getLastRollTotal(),
+                $this->dice
+            );
+        } catch (HaventRolledYetException $e) {
+            $dVals = [];
+        }
+        return $dVals;
+    }
 }

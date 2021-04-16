@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace dtlw\Dice;
 
+use dtlw\Dice\HaventRolledYetException;
+
 /**
 * Class for representing dice.
 */
@@ -47,6 +49,9 @@ class Dice implements Rollable
     */
     public function getLastRollTotal(): int
     {
+        if (is_null($this->lastRoll)) {
+            throw new HaventRolledYetException();
+        }
         return $this->lastRoll;
     }
 

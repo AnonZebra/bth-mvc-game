@@ -7,6 +7,7 @@ namespace dtlw\Dice;
 use dtlw\Dice\DiceGamePlayer;
 use dtlw\Dice\DiceHand;
 use dtlw\Dice\YahtzeeScoreSheet;
+use dtlw\Dice\FullSheetException;
 
 /**
 * A player in a dice game, see `BlackjackGame` class.
@@ -15,21 +16,16 @@ use dtlw\Dice\YahtzeeScoreSheet;
 */
 class YahtzeePlayer extends DiceGamePlayer
 {
-
-
     /**
-    * @var YahtzeeScoreSheet $scoreSheet This player's sheet of yahtzee scores.
+    * @var YahtzeeScoreSheet $scoresheet This player's sheet of yahtzee scores.
     */
     private YahtzeeScoreSheet $scoresheet;
+    private int $numConsecutiveRolls = 0;
 
-    /**
-    * @param int $numDice The number of dice to be included in the player's
-    * hand.
-    */
-    public function __construct(int $numDice)
+    public function __construct()
     {
         $dieFactory = new DieFactory('plain');
-        parent::__construct($numDice, $dieFactory);
+        parent::__construct(5, $dieFactory);
         $this->scoresheet = new YahtzeeScoreSheet();
     }
 
@@ -39,9 +35,10 @@ class YahtzeePlayer extends DiceGamePlayer
     * of which of the hand's dice are to be left as they are, ie
     * are _not_ to be rolled.
     */
-    public function roll(($skipIndices = [])): void
+    public function roll($skipIndices = []): void
     {
         $this->hand->roll($skipIndices);
+        $this->numConsecutiveRolls += 1;
     }
 
     /**
@@ -51,20 +48,68 @@ class YahtzeePlayer extends DiceGamePlayer
     {
         $categoryName = $this->scoresheet->getScoreLessCategoryName();
         $categoryVal = intval($categoryName);
-        $categoryTotal = array_reduce(
-            array_filter(
-                $this->hand->getLastRoll(),
-                fn($val) => $val == $categoryVal
-            ),
-            fn($val1, $val2) => $val1 + $val2
+        $matchingVals = array_filter(
+            $this->hand->getLastRoll(),
+            fn($val) => $val == $categoryVal
         );
+        if (count($matchingVals) == 0) {
+            $categoryTotal = 0;
+        } else {
+            $categoryTotal = array_reduce(
+                $matchingVals,
+                fn($val1, $val2) => $val1 + $val2
+            );
+        }
+
         $this->scoresheet->setCategoryScore($categoryName, $categoryTotal);
+        $this->numConsecutiveRolls = 0;
     }
 
     /**
-    * Keeps
+    * @return int The players' current total score.
     */
-    public function autoPlay(int $surpassValue)
+    public function getScore(): int
     {
+        return $this->scoresheet->getTotalScore();
+    }
+
+    /**
+    * Resets this player's scoresheet.
+    */
+    public function resetScore(): void
+    {
+        $this->scoresheet->reset();
+    }
+
+    public function getNumConsecutiveRolls(): int
+    {
+        return $this->numConsecutiveRolls;
+    }
+
+    /**
+    * @return int[] The values of the this player's last roll/
+    * current hand.
+    */
+    public function getCurrentDieValues(): array
+    {
+        return $this->hand->getDievalues();
+    }
+
+    public function finished(): bool
+    {
+        return $this->scoresheet->isFilledOut();
+    }
+
+    /**
+    * @return int The die value that the player is to try to get as many
+    * of as possible right now (or 0 if no values are left to fill in).
+    */
+    public function getGoalValue(): int
+    {
+        try {
+            return intval($this->scoresheet->getScoreLessCategoryName());
+        } catch (FullSheetException $e) {
+            return 0;
+        }
     }
 }

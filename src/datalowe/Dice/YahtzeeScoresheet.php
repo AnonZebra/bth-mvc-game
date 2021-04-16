@@ -11,13 +11,16 @@ use dtlw\Dice\FullSheetException;
 */
 class YahtzeeScoresheet
 {
+    private const BONUS_THRESHOLD = 63;
+    private const BONUS_POINTS = 50;
+
     private array $categoryScores = [
-        '1' => null,
-        '2' => null,
-        '3' => null,
-        '4' => null,
+        '6' => null,
         '5' => null,
-        '6' => null
+        '4' => null,
+        '3' => null,
+        '2' => null,
+        '1' => null
     ];
 
     public function __construct()
@@ -30,7 +33,7 @@ class YahtzeeScoresheet
     */
     public function setCategoryScore(string $categoryName, int $score): void
     {
-        if (!array_key_exists($categoryName, $categoryScores)) {
+        if (!array_key_exists($categoryName, $this->categoryScores)) {
             throw new InvalidCategoryException();
         }
         $this->categoryScores[$categoryName] = $score;
@@ -41,10 +44,15 @@ class YahtzeeScoresheet
     */
     public function getTotalScore(): int
     {
-        return array_reduce(
+        $totalScore = array_reduce(
             $this->categoryScores,
             fn($val1, $val2) => $val1 + $val2
         );
+        // add bonus
+        if ($totalScore >= self::BONUS_THRESHOLD) {
+            $totalScore += self::BONUS_POINTS;
+        }
+        return $totalScore;
     }
 
     /**
@@ -56,13 +64,13 @@ class YahtzeeScoresheet
     }
 
     /**
-    * Gets the name of the last-positioned category which has
+    * Gets the name of the first-positioned category which has
     * no set score.
     * @return string
     */
     public function getScoreLessCategoryName(): string
     {
-        foreach (array_reverse($this->categoryScores) as $catName => $val) {
+        foreach ($this->categoryScores as $catName => $val) {
             if (is_null($val)) {
                 return $catName;
             }
@@ -82,5 +90,15 @@ class YahtzeeScoresheet
             }
         }
         return true;
+    }
+
+    /**
+    * Resets this score sheet.
+    */
+    public function reset(): void
+    {
+        for ($i = 0; $i < count($this->categoryScores); $i++) {
+            $this->categoryScores[$i] = null;
+        }
     }
 }

@@ -8,7 +8,7 @@ use dtlw\Dice\DiceHand;
 use dtlw\Dice\DieFactory;
 
 /**
-* A player in a dice game, see `DiceGame` class.
+* Represents players in games of dice.
 * @author Lowe Wilsson <datalowe@posteo.de>
 * @link www.datalowe.com
 */
@@ -47,15 +47,6 @@ abstract class DiceGamePlayer
     public function getScore(): int
     {
         return $this->score;
-    }
-
-    /**
-    * Increment player score
-    * @param int $incVal Value to increment score by
-    */
-    protected function incrementScore(int $incVal): void
-    {
-        $this->score += $incVal;
     }
 
     /**

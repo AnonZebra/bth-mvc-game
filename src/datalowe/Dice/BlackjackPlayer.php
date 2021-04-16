@@ -40,6 +40,15 @@ class BlackjackPlayer extends DiceGamePlayer
     }
 
     /**
+    * Increment player score
+    * @param int $incVal Value to increment score by
+    */
+    protected function incrementScore(int $incVal): void
+    {
+        $this->score += $incVal;
+    }
+
+    /**
     * Keeps rolling this player's dice until this player's score has surpassed
     * the passed value and/or surpassed 21.
     * @param int $surpassValue

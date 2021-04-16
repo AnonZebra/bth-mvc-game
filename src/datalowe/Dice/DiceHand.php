@@ -26,10 +26,18 @@ class DiceHand
 
     /**
     * Rolls the hand's dice, updating their values.
+    * @param int[] $skipIndices (optional) Specification
+    * of which of the hand's dice are to be left as they are, ie
+    * are _not_ to be rolled.
     */
-    public function roll()
+    public function roll($skipIndices = []): void
     {
-        array_map(fn($die) => $die->roll(), $this->dice);
+        for ($i = 0; $i < count($this->dice); $i++) {
+            if (in_array($i, $skipIndices)) {
+                continue;
+            }
+            $this->dice[$i]->roll();
+        }
     }
 
     /**

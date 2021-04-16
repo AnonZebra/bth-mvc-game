@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace dtlw\Dice;
 
 /**
-* An interface for representing dice.
+* An interface for representing something that can be rolled, in the sense
+* of rolling a die.
 */
 interface Rollable
 {

@@ -46,7 +46,7 @@ class YahtzeeScoresheet
     {
         $totalScore = array_reduce(
             $this->categoryScores,
-            fn($val1, $val2) => $val1 + $val2
+            fn($val1, $val2) => intval($val1) + intval($val2)
         );
         // add bonus
         if ($totalScore >= self::BONUS_THRESHOLD) {
@@ -58,7 +58,7 @@ class YahtzeeScoresheet
     /**
     * @return array An array of category-score pairs
     */
-    public function getCategoryScores(): int
+    public function getCategoryScores(): array
     {
         return $this->categoryScores;
     }

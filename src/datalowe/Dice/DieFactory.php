@@ -7,6 +7,7 @@ namespace dtlw\Dice;
 use dtlw\Dice\InvalidDieTypeException;
 use dtlw\Dice\Dice;
 use dtlw\Dice\GraphicalDice;
+use Exception as Exception;
 
 /**
 * Class whose instances are to generate different kinds of
@@ -22,7 +23,7 @@ class DieFactory
     ];
 
     /**
-    * @param string dieType A name of the type of die that the
+    * @param string $dieType A name of the type of die that the
     * factory is to generate. 'graphical' or 'plain'.
     */
     public function __construct(string $dieType, $numSides = 6)
@@ -39,12 +40,13 @@ class DieFactory
     * die type.
     * @return Dice
     */
-    public function make(): Dice
+    public function make(): ?Dice
     {
         if ($this->dieType == 'graphical') {
-            return new GraphicalDice($this->numSides);
+            return new GraphicalDice();
         } elseif ($this->dieType == 'plain') {
             return new Dice($this->numSides);
         }
+        throw new Exception();
     }
 }

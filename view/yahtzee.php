@@ -26,8 +26,8 @@ declare(strict_types=1);
 <?php endif ?>
 
 <?php if (!$roundHasEnded) : ?>
-    <p>You should try to get as many <?= $goalValue ?>'s as possible now.</p>
     <?php if ($numRollsLeft > 0) : ?>
+    <p>You should try to get as many <?= $goalValue ?>'s as possible now.</p>
     <form action="" method="POST">
         <?php if ($currentRoll > 1) : ?>
             <p>Choose which dice to leave alone (not roll):</p>

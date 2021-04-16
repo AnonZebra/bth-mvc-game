@@ -27,7 +27,6 @@ class Dice implements Rollable
 
     /**
     * Rolls the die and returns the result.
-    * @return int Roll result.
     */
     public function roll(): void
     {

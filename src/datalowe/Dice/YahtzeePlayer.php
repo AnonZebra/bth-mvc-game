@@ -6,7 +6,7 @@ namespace dtlw\Dice;
 
 use dtlw\Dice\DiceGamePlayer;
 use dtlw\Dice\DiceHand;
-use dtlw\Dice\YahtzeeScoreSheet;
+use dtlw\Dice\YahtzeeScoresheet;
 use dtlw\Dice\FullSheetException;
 
 /**
@@ -17,16 +17,16 @@ use dtlw\Dice\FullSheetException;
 class YahtzeePlayer extends DiceGamePlayer
 {
     /**
-    * @var YahtzeeScoreSheet $scoresheet This player's sheet of yahtzee scores.
+    * @var YahtzeeScoresheet $scoresheet This player's sheet of yahtzee scores.
     */
-    private YahtzeeScoreSheet $scoresheet;
+    private YahtzeeScoresheet $scoresheet;
     private int $numConsecutiveRolls = 0;
 
     public function __construct()
     {
         $dieFactory = new DieFactory('plain');
         parent::__construct(5, $dieFactory);
-        $this->scoresheet = new YahtzeeScoreSheet();
+        $this->scoresheet = new YahtzeeScoresheet();
     }
 
     /**

@@ -46,12 +46,25 @@ $router->addGroup("/blackjack", function (RouteCollector $router) {
     $router->addRoute(
         "GET",
         "",
-        ["\dtlw\Controller\Game", "blackjackShow"]
+        ["\dtlw\Controller\BlackjackController", "blackjackShow"]
     );
     $router->addRoute(
         "POST",
         "",
-        ["\dtlw\Controller\Game", "blackjackProcess"]
+        ["\dtlw\Controller\BlackjackController", "blackjackProcess"]
+    );
+});
+
+$router->addGroup("/yahtzee", function (RouteCollector $router) {
+    $router->addRoute(
+        "GET",
+        "",
+        ["\dtlw\Controller\YahtzeeController", "yahtzeeShow"]
+    );
+    $router->addRoute(
+        "POST",
+        "",
+        ["\dtlw\Controller\YahtzeeController", "yahtzeeProcess"]
     );
 });
 

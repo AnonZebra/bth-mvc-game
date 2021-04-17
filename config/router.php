@@ -36,11 +36,6 @@ $router->addGroup("/form", function (RouteCollector $router) {
 });
 
 $router->addRoute("GET", "/dice", ["\dtlw\Controller\Game", "dice"]);
-// $router->addRoute(
-//     "GET",
-//     "/blackjack",
-//     ["\dtlw\Controller\Game", "blackjack"]
-// );
 
 $router->addGroup("/blackjack", function (RouteCollector $router) {
     $router->addRoute(
@@ -67,11 +62,3 @@ $router->addGroup("/yahtzee", function (RouteCollector $router) {
         ["\dtlw\Controller\YahtzeeController", "yahtzeeProcess"]
     );
 });
-
-// $router->addRoute('GET', '/layout/page.php', '');
-//
-// $router->addRoute('GET', '/dice', '');
-//
-// $router->addRoute('GET', '/blackjack', '');
-//
-// $router->addRoute('POST', '/blackjack', '');

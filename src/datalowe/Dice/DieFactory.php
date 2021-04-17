@@ -42,7 +42,7 @@ class DieFactory
     * die type.
     * @return Dice
     */
-    public function make(): ?Dice
+    public function make(): Dice
     {
         if ($this->dieType == 'graphical') {
             return new GraphicalDice();

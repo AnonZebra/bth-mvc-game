@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace dtlw\Dice;
 
 use dtlw\Dice\YahtzeePlayer as Player;
-use dtlw\Dice\TooManyRollsException;
 
 /**
 * Implements a game where a single player plays a limited version of Yahtzee,

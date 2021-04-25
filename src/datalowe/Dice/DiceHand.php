@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace dtlw\Dice;
 
-// use dtlw\Dice\GraphicalDice as SingleDie;
-use dtlw\Dice\DieFactory;
-use dtlw\Dice\Dice;
-
 /**
 * Class for representing hands of dice.
 */

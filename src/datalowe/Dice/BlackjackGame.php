@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace dtlw\Dice;
 
 use dtlw\Dice\BlackjackPlayer as Player;
-use dtlw\Dice\InvalidNumberOfDice as InvalidNumberOfDice;
 
 /**
 * Implements a game where two players play 'blackjack with dice', where

@@ -2,9 +2,6 @@
 
 namespace dtlw\Dice;
 
-use dtlw\Dice\InvalidCategoryException;
-use dtlw\Dice\FullSheetException;
-
 /**
 * Represents simplified yahtzee game score sheet.
 * @author Lowe Wilsson

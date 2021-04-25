@@ -4,11 +4,6 @@ declare(strict_types=1);
 
 namespace dtlw\Dice;
 
-use dtlw\Dice\InvalidDieTypeException;
-use dtlw\Dice\Dice;
-use dtlw\Dice\GraphicalDice;
-use Exception as Exception;
-
 /**
 * Class whose instances are to generate different kinds of
 * dice, based on specification passed at time of creation.

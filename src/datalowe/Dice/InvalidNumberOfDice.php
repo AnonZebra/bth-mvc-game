@@ -2,7 +2,7 @@
 
 namespace dtlw\Dice;
 
-use Exception as Exception;
+use Exception;
 
 class InvalidNumberOfDice extends Exception
 {

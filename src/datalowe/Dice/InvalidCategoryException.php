@@ -2,7 +2,7 @@
 
 namespace dtlw\Dice;
 
-use Exception as Exception;
+use Exception;
 
 class InvalidCategoryException extends Exception
 {

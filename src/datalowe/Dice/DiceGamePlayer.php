@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace dtlw\Dice;
 
-use dtlw\Dice\DiceHand;
-use dtlw\Dice\DieFactory;
-
 /**
 * Represents players in games of dice.
 * @author Lowe Wilsson <datalowe@posteo.de>

@@ -4,11 +4,6 @@ declare(strict_types=1);
 
 namespace dtlw\Dice;
 
-use dtlw\Dice\DiceGamePlayer;
-use dtlw\Dice\DiceHand;
-use dtlw\Dice\YahtzeeScoresheet;
-use dtlw\Dice\FullSheetException;
-
 /**
 * A player in a dice game, see `BlackjackGame` class.
 * @author Lowe Wilsson <datalowe@posteo.de>

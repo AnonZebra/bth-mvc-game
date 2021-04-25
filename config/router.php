@@ -35,8 +35,6 @@ $router->addGroup("/form", function (RouteCollector $router) {
     $router->addRoute("POST", "/process", ["\Mos\Controller\Form", "process"]);
 });
 
-$router->addRoute("GET", "/dice", ["\dtlw\Controller\Game", "dice"]);
-
 $router->addGroup("/blackjack", function (RouteCollector $router) {
     $router->addRoute(
         "GET",

@@ -15,15 +15,6 @@ use function Mos\Functions\{
 
 class BlackjackController
 {
-    public function dice(): ResponseInterface
-    {
-        $body = renderView("layout/dice.php");
-        $psr17Factory = new Psr17Factory();
-        return $psr17Factory
-            ->createResponse(200)
-            ->withBody($psr17Factory->createStream($body));
-    }
-
     public function blackjackShow(): ResponseInterface
     {
         if (!array_key_exists("game", $_SESSION)) {

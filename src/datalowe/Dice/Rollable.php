@@ -15,9 +15,7 @@ interface Rollable
     * _even_ if it's just one integer,
     * to make the interface more consistent.
     */
-    public function getLastRoll(): array;
-
-    public function getLastRollTotal(): int;
+    public function getLastRoll(): ?int;
 
     public function roll(): void;
 }

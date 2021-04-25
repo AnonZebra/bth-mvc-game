@@ -33,7 +33,7 @@ class GraphicalDice extends Dice
     public function getFaceImg(): string
     {
         return (
-            getBaseUrl() . "/img/die/die{$this->getLastRollTotal()}.svg"
+            getBaseUrl() . "/img/die/die{$this->getLastRoll()}.svg"
         );
     }
 }

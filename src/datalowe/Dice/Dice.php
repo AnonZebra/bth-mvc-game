@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace dtlw\Dice;
 
-use dtlw\Dice\HaventRolledYetException;
-
 /**
 * Class for representing dice.
 */
@@ -14,7 +12,7 @@ class Dice implements Rollable
     // number of sides/faces of die
     private $numSides = 0;
     // result of last roll
-    private $lastRoll;
+    private $lastRoll = null;
 
     /**
     * Constructor
@@ -34,26 +32,16 @@ class Dice implements Rollable
     }
 
     /**
-    * Fetches and returns last roll result, as a one-element array.
-    * @return int[] Roll result.
-    */
-    public function getLastRoll(): array
-    {
-        return [$this->lastRoll];
-    }
-
-    /**
-    * Fetches and returns last roll result, as an integer.
+    * Fetches and returns last roll result.
     * @return int Roll result.
     */
-    public function getLastRollTotal(): int
+    public function getLastRoll(): int
     {
         if (is_null($this->lastRoll)) {
-            throw new HaventRolledYetException();
+            throw new HaventRolledYetException("The die must first be rolled.");
         }
         return $this->lastRoll;
     }
-
     /**
     * Updates the number of die faces.
     * @param int $numSides - Number of die faces to update to.

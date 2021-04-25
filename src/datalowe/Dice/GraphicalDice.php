@@ -32,8 +32,14 @@ class GraphicalDice extends Dice
     */
     public function getFaceImg(): string
     {
+        try {
+            $lastRollVal = $this->getLastRoll();
+        } catch (HaventRolledYetException $e) {
+            throw $e;
+        }
+
         return (
-            getBaseUrl() . "/img/die/die{$this->getLastRoll()}.svg"
+            getBaseUrl() . "/img/die/die{$lastRollVal}.svg"
         );
     }
 }

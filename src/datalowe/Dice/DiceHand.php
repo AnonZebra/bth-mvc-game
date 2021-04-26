@@ -43,7 +43,11 @@ class DiceHand
     */
     public function getLastRoll(): array
     {
-        return array_map(fn($die) => $die->getLastRoll(), $this->dice);
+        try {
+            return array_map(fn($die) => $die->getLastRoll(), $this->dice);
+        } catch (HaventRolledYetException $e) {
+            throw new HaventRolledYetException("Hand must first be rolled.");
+        }
     }
 
     /**

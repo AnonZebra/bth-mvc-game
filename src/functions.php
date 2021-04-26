@@ -81,33 +81,33 @@ function renderTwigView(
 
 
 
-/**
- * Send a response to the client.
- *
- * @param int    $status   HTTP status code to send to client.
- *
- * @return void
- */
-function sendResponse(string $body, int $status = 200): void
-{
-    http_response_code($status);
-    echo $body;
-}
-
-
-
-/**
- * Redirect to an url.
- *
- * @param string $url where to redirect.
- *
- * @return void
- */
-function redirectTo(string $url): void
-{
-    http_response_code(200);
-    header("Location: $url");
-}
+// /**
+//  * Send a response to the client.
+//  *
+//  * @param int    $status   HTTP status code to send to client.
+//  *
+//  * @return void
+//  */
+// function sendResponse(string $body, int $status = 200): void
+// {
+//     http_response_code($status);
+//     echo $body;
+// }
+//
+//
+//
+// /**
+//  * Redirect to an url.
+//  *
+//  * @param string $url where to redirect.
+//  *
+//  * @return void
+//  */
+// function redirectTo(string $url): void
+// {
+//     http_response_code(200);
+//     header("Location: $url");
+// }
 
 
 

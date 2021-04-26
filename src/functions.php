@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Mos\Functions;
 
+use Twig\Loader\FilesystemLoader;
+use Twig\Environment;
+
 /**
  * Functions.
  */
@@ -16,10 +19,10 @@ namespace Mos\Functions;
  */
 function getRoutePath(): string
 {
-    $offset = strlen(dirname($_SERVER["SCRIPT_NAME"]));
-    $path   = substr($_SERVER["REQUEST_URI"], $offset);
+    $offset = strlen(dirname($_SERVER["SCRIPT_NAME"] ?? null));
+    $path   = substr($_SERVER["REQUEST_URI"] ?? "", $offset);
 
-    return $path;
+    return $path ? $path : "";
 }
 
 
@@ -64,13 +67,13 @@ function renderTwigView(
     static $twig = null;
 
     if (is_null($twig)) {
-        $loader = new \Twig\Loader\FilesystemLoader(
+        $loader = new FilesystemLoader(
             INSTALL_PATH . "/view/twig"
         );
         // $twig = new \Twig\Environment($loader, [
         //     "cache" => INSTALL_PATH . "/cache/twig",
         // ]);
-        $twig = new \Twig\Environment($loader);
+        $twig = new Environment($loader);
     }
 
     return $twig->render($template, $data);
@@ -136,14 +139,16 @@ function getBaseUrl()
         return $baseUrl;
     }
 
-    $scriptName = rawurldecode($_SERVER["SCRIPT_NAME"]);
+    $scriptName = rawurldecode($_SERVER["SCRIPT_NAME"] ?? null);
     $path = rtrim(dirname($scriptName), "/");
 
     // Prepare to create baseUrl by using currentUrl
     $parts = parse_url(getCurrentUrl());
 
     // Build the base url from its parts
-    $siteUrl = "{$parts["scheme"]}://{$parts["host"]}"
+    $siteUrl = ($parts["scheme"] ?? null)
+        . "://"
+        . ($parts["host"] ?? null)
         . (isset($parts["port"])
             ? ":{$parts["port"]}"
             : "");
@@ -161,17 +166,17 @@ function getBaseUrl()
  */
 function getCurrentUrl(): string
 {
-    $scheme = $_SERVER["REQUEST_SCHEME"];
-    $server = $_SERVER["SERVER_NAME"];
+    $scheme = $_SERVER["REQUEST_SCHEME"] ?? "";
+    $server = $_SERVER["SERVER_NAME"] ?? "";
 
-    $port  = $_SERVER["SERVER_PORT"];
+    $port  = $_SERVER["SERVER_PORT"] ?? "";
     $port  = ($port === "80")
         ? ""
-        : (($port === 443 && $_SERVER["HTTPS"] === "on")
+        : (($port === 443 && ($_SERVER["HTTPS"] ?? null) === "on")
             ? ""
             : ":" . $port);
 
-    $uri = rtrim(rawurldecode($_SERVER["REQUEST_URI"]), "/");
+    $uri = rtrim(rawurldecode($_SERVER["REQUEST_URI"] ?? ""), "/");
 
     $url  = htmlspecialchars($scheme) . "://";
     $url .= htmlspecialchars($server)

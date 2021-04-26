@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "26560cfce31f5b7b4e3f71417a4a521f",
+    "content-hash": "adb2d8970700843cc555f5a68ff668b3",
     "packages": [
         {
             "name": "laminas/laminas-httphandlerrunner",

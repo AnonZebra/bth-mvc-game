@@ -21,7 +21,6 @@ class BlackjackControllerTest extends TestCase
         $_SERVER["SERVER_NAME"] = "bar";
         $_SERVER["SERVER_PORT"] = "9001";
         $_SERVER["REQUEST_URI"] = "/baz";
-        define("INSTALL_PATH", realpath(__DIR__ . "/../.."));
     }
 
     public function setUp(): void

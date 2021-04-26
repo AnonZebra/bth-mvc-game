@@ -52,13 +52,13 @@ class YahtzeeScoresheet
         return $totalScore;
     }
 
-    // /**
-    // * @return array An array of category-score pairs
-    // */
-    // public function getCategoryScores(): array
-    // {
-    //     return $this->categoryScores;
-    // }
+    /**
+    * @return array An array of category-score pairs
+    */
+    public function getCategoryScores(): array
+    {
+        return $this->categoryScores;
+    }
 
     /**
     * Gets the name of the first-positioned category which has
@@ -95,7 +95,7 @@ class YahtzeeScoresheet
     public function reset(): void
     {
         for ($i = 0; $i < count($this->categoryScores); $i++) {
-            $this->categoryScores[$i] = null;
+            $this->categoryScores[$i + 1] = null;
         }
     }
 }

@@ -126,6 +126,10 @@ class YahtzeeGame
     */
     public function getCurrentDieValues(): array
     {
-        return $this->activePlayer->getCurrentDieValues();
+        try {
+            return $this->activePlayer->getCurrentDieValues();
+        } catch (HaventRolledYetException $e) {
+            throw $e;
+        }
     }
 }

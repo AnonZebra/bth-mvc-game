@@ -87,7 +87,11 @@ class YahtzeePlayer extends DiceGamePlayer
     */
     public function getCurrentDieValues(): array
     {
-        return $this->hand->getLastRoll();
+        try {
+            return $this->hand->getLastRoll();
+        } catch (HaventRolledYetException $e) {
+            throw $e;
+        }
     }
 
     public function finished(): bool

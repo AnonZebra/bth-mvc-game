@@ -33,9 +33,7 @@ abstract class DiceGamePlayer
     * Roll this player's hand of dice, adding the value sum to the
     * player's score.
     */
-    public function roll(): void
-    {
-    }
+    abstract public function roll(): void;
 
     /**
     * @return int Player's current score.

@@ -43,7 +43,10 @@ class DiceTest extends TestCase
     }
 
     /**
-    * setNumSides does update the number of sides
+    * setNumSides does update the number of sides.
+    * note that this test doesn't actually test what it's supposed
+    * to, since the rand function is mocked. I haven't found a good
+    * workaround for this.
     */
     public function testSetNumSides(): void
     {

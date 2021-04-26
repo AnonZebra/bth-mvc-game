@@ -1,3 +1,5 @@
 vendor/
 .DS_Store
 old_files/
+.phpunit.xml0
+.phpunit.result.cache

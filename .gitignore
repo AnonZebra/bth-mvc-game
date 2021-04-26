@@ -3,3 +3,4 @@ vendor/
 old_files/
 .phpunit.xml0
 .phpunit.result.cache
+build/

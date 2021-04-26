@@ -39,6 +39,9 @@ class BlackjackController
     }
     public function blackjackProcess(): ResponseInterface
     {
+        if (!array_key_exists("game", $_SESSION)) {
+            $_SESSION["game"] = new BlackjackGame();
+        }
         $game = $_SESSION["game"];
         if (array_key_exists("num-dice", $_POST)) {
             $numDice = intval($_POST["num-dice"]);

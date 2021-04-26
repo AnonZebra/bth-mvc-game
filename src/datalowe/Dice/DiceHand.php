@@ -57,7 +57,14 @@ class DiceHand
     */
     public function getFaceImgs()
     {
-        return array_map(fn($die) => $die->getFaceImg(), $this->dice);
+        if (!method_exists($this->dice[0], 'getFaceImg')) {
+            throw new InvalidDieTypeException("Hand's die type doesn't have face images.");
+        }
+        try {
+            return array_map(fn($die) => $die->getFaceImg(), $this->dice);
+        } catch (HaventRolledYetException $e) {
+            throw new HaventRolledYetException("Hand must first be rolled.");
+        }
     }
 
     /**
@@ -66,25 +73,13 @@ class DiceHand
     */
     public function getLastRollTotal()
     {
-        return array_reduce(
-            $this->getLastRoll(),
-            fn($rollVal1, $rollVal2) => $rollVal1 + $rollVal2
-        );
-    }
-
-    /**
-    * @return int[] All of the hand's current/last roll die values.
-    */
-    public function getDieValues(): array
-    {
         try {
-            $dVals = array_map(
-                fn($die) => $die->getLastRoll(),
-                $this->dice
+            return array_reduce(
+                $this->getLastRoll(),
+                fn($rollVal1, $rollVal2) => $rollVal1 + $rollVal2
             );
-        } catch (HaventRolledYetException $e) {
-            $dVals = [];
+        } catch (HaventRolledYetException | InvalidDieTypeException $e) {
+            throw $e;
         }
-        return $dVals;
     }
 }

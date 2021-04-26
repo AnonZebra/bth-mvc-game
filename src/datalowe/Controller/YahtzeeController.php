@@ -7,6 +7,7 @@ namespace dtlw\Controller;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\ResponseInterface;
 use dtlw\Dice\YahtzeeGame;
+use dtlw\Dice\HaventRolledYetException;
 
 use function Mos\Functions\{
     url,
@@ -15,28 +16,24 @@ use function Mos\Functions\{
 
 class YahtzeeController
 {
-    public function dice(): ResponseInterface
-    {
-        $body = renderView("layout/dice.php");
-        $psr17Factory = new Psr17Factory();
-        return $psr17Factory
-            ->createResponse(200)
-            ->withBody($psr17Factory->createStream($body));
-    }
-
     public function yahtzeeShow(): ResponseInterface
     {
-        // unset($_SESSION["yahtzee"]);
         if (!array_key_exists("yahtzee", $_SESSION)) {
             $_SESSION["yahtzee"] = new YahtzeeGame();
         }
         $game = $_SESSION["yahtzee"];
+
+        try {
+            $dieVals = $game->getCurrentDieValues();
+        } catch (HaventRolledYetException $e) {
+            $dieVals = array();
+        }
         $data = [
             "scores" => $game->getScores(),
             "roundHasEnded" => $game->roundHasEnded(),
             "numRollsLeft" => $game->getNumRollsLeft(),
             "currentRoll" => $game->getCurrentRollNumber(),
-            "dieVals" => $game->getCurrentDieValues(),
+            "dieVals" => $dieVals,
             "goalValue" => $game->getGoalValue()
         ];
         if (array_key_exists("errmsg", $_SESSION)) {
@@ -51,10 +48,12 @@ class YahtzeeController
     }
     public function yahtzeeProcess(): ResponseInterface
     {
+        if (!array_key_exists("yahtzee", $_SESSION)) {
+            $_SESSION["yahtzee"] = new YahtzeeGame();
+        }
         $game = $_SESSION["yahtzee"];
         if (array_key_exists("roll-dice", $_POST)) {
             if (array_key_exists('dice', $_POST)) {
-                $_SESSION["errmsg"] = implode(" : ", $_POST['dice']);
                 $pickedDice = array_map(
                     fn($x) => intval($x),
                     $_POST['dice']

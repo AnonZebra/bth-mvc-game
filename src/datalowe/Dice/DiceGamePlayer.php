@@ -69,11 +69,11 @@ abstract class DiceGamePlayer
         return $this->wonRounds;
     }
 
-    /**
-    * Reset this player's number of won rounds.
-    */
-    public function resetWonRounds(): void
-    {
-        $this->wonRounds = 0;
-    }
+    // /**
+    // * Reset this player's number of won rounds.
+    // */
+    // public function resetWonRounds(): void
+    // {
+    //     $this->wonRounds = 0;
+    // }
 }

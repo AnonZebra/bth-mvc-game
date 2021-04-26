@@ -35,7 +35,6 @@ abstract class DiceGamePlayer
     */
     public function roll(): void
     {
-        $this->hand->roll();
     }
 
     /**

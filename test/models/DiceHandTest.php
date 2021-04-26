@@ -30,6 +30,12 @@ class DiceHandTest extends TestCase
         $this->graphH = new DiceHand(self::NUM_DICE, new DieFactory('graphical'));
     }
 
+    public function tearDown(): void
+    {
+        // reset rand() function
+        rand(-2, 0);
+    }
+
     /**
     * getLastRoll throws exception when no roll has been made.
     */
@@ -76,9 +82,6 @@ class DiceHandTest extends TestCase
         $afterVal = $this->plainH->getLastRoll()[$SKIP_INDEX];
 
         $this->assertSame($saveVal, $afterVal);
-
-        // reset rand() function
-        rand(-2, 0);
     }
 
     /**
@@ -158,9 +161,6 @@ class DiceHandTest extends TestCase
             self::NUM_DICE * $ROLL_VAL,
             $this->plainH->getLastRollTotal()
         );
-
-        // reset rand return value
-        rand(-2, 0);
     }
 
     /**

@@ -20,7 +20,7 @@ use function Mos\Functions\{
 function rand(int $val1, int $val2): int
 {
     static $returnVal = 0;
-    static $useBuiltin = false;
+    static $useBuiltin = true;
 
     if ($val1 == -1) {
         $returnVal = $val2;
@@ -50,6 +50,12 @@ class GraphicalDiceTest extends TestCase
         $this->dDie = new GraphicalDice();
     }
 
+    public function tearDown(): void
+    {
+        // reset rand() function
+        rand(-2, 0);
+    }
+
     /**
     * setNumSides does nothing, specifically does not update the number of sides
     */
@@ -62,8 +68,6 @@ class GraphicalDiceTest extends TestCase
         $this->dDie->roll();
 
         $this->assertSame($this->dDie->getLastRoll(), 4);
-        // reset rand() function
-        rand(-2, 0);
     }
 
     /**
@@ -97,7 +101,5 @@ class GraphicalDiceTest extends TestCase
             getBaseUrl() . "/img/die/die6.svg",
             $this->dDie->getFaceImg()
         );
-        // reset rand() function
-        rand(-2, 0);
     }
 }

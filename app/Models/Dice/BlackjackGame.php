@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\Models\Dice;
 
 use App\Models\Dice\BlackjackPlayer as Player;
+use App\Models\Player as DbPlayer;
+use App\Models\Score as DbScore;
+use App\Models\GameSession as DbGameSession;
 
 /**
 * Implements a game where two players play 'blackjack with dice', where
@@ -78,11 +81,12 @@ class BlackjackGame
     /**
     * Check who won the round based on current scores and, unless
     * they are all equal, increase the winner's number of won rounds.
-    * Reset players' scores.
+    * Save round results to database. Reset players' scores.
     */
     public function endRound()
     {
         $scores = $this->getScores();
+        $this->roundToDb();
         if ($scores["human"] > $scores["computer"] && $scores["human"] < 22) {
             $this->humanPlayer->bumpWonRounds();
         } elseif ($scores["human"] < 22 && $scores["computer"] > 21) {
@@ -91,6 +95,30 @@ class BlackjackGame
             $this->autoPlayer->bumpWonRounds();
         }
         $this->roundEnded = true;
+    }
+
+    /**
+     * Save current player scores to database.
+     */
+    public function roundToDb()
+    {
+        $scores = $this->getScores();
+
+        $dbSession = DbGameSession::create(
+            ['game_type' => 'blackjack']
+        );
+        foreach ($scores as $playerName => $value) {
+            $dbPlayer = DbPlayer::firstOrCreate(
+                ['name' => $playerName]
+            );
+            DbScore::create(
+                [
+                    'score' => $scores[$playerName],
+                    'player_id' => $dbPlayer->id,
+                    'session_id' => $dbSession->id,
+                ]
+            );
+        }
     }
 
     /**

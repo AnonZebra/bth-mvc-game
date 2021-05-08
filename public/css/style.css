@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
+html {
+    box-sizing: border-box;
+}
+
 body {
     background-color: #fefefe;
     font-family: 'Roboto', sans-serif;
@@ -129,4 +133,34 @@ input[type=number]:focus {
     margin: 0.4rem 0.4rem 0.4rem 0;
     border-radius: 0.4rem;
     padding: 0.5rem 0.7rem;
+}
+
+table {
+    max-width: 95%;
+    min-width: 85%;
+    text-align: center;
+    border-collapse: collapse;
+    padding: 0;
+    background-color: #fefefe;
+    border-radius: 0.4rem;
+    border-style: solid;
+    border-color: #333;
+}
+
+table > tbody > tr {
+    padding: 0 1rem;
+    border-collapse: collapse;
+    border-radius: 5px;
+}
+
+table > tbody > tr:first-child {
+    font-weight: 600;
+    background-color: #333;
+    color: #fff;
+    border: #333;
+}
+
+table > tbody > tr:nth-child(2n+1):not(:first-child) {
+    background-color: #eee;
+    color: #333;
 }

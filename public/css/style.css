@@ -164,3 +164,46 @@ table > tbody > tr:nth-child(2n+1):not(:first-child) {
     background-color: #eee;
     color: #333;
 }
+
+ul {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.book-card {
+    display: grid;
+    list-style: none;
+    background-color: #fff;
+    color: #333;
+    padding: 2rem 4rem;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 4rem;
+    border-radius: 0.4rem;
+    border-style: solid;
+    border-color: #333;
+    width: 40%;
+}
+
+.book-card > img {
+    padding: 0.4rem;
+    border-style: solid;
+    border-color: #333;
+    margin-left: 4rem;
+    width: 200px;
+}
+
+.darker-bg {
+    background-color: #f0f0f0;
+}
+
+.all-space {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    max-width: none;
+}

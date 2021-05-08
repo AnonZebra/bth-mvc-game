@@ -8,7 +8,7 @@
     <header>
         @yield('header')
     </header>
-    <main>
+    <main @if (isset($mainClass)) class='{{ $mainClass }}' @endif>
         @if (session()->has('errmsg'))
             <p class="error-msg">Error: {{ session('errmsg') }}</p>
             {{ session(['errmsg' => null]) }}

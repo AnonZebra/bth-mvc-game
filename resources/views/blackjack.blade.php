@@ -47,6 +47,8 @@
     <input name="num-dice" id="num-dice" type="number"></input>
     <input name="start-new" id="start-new" type="submit" value="New game"></input>
 </form>
+
+<p><a href="{{ url('/blackjack/hi-scores') }}">Go to Blackjack high scores</a></p>
 @endsection
 
 @include('layout.head')

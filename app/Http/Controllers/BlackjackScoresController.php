@@ -13,7 +13,8 @@ class BlackjackScoresController extends Controller
     {
         $dbScores = Score::with(['player', 'gameSession'])
             ->where('score', '<', 22)
-            ->orderBy('score')
+            ->orderByDesc('score')
+            ->limit(3)
             ->get()
             ->toArray();
         $gameData = array_map(

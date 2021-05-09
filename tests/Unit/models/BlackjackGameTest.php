@@ -2,7 +2,7 @@
 
 namespace App\Models\Dice;
 
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
 class BlackjackGameTest extends TestCase
 {
@@ -66,86 +66,5 @@ class BlackjackGameTest extends TestCase
         $this->assertIsArray($this->game->getWonRounds());
         $this->assertSame($this->game->getWonRounds()['human'], 0);
         $this->assertSame($this->game->getWonRounds()['computer'], 0);
-    }
-
-    /**
-    * test that endRound when it's a draw increases computer number of won
-    * rounds
-    */
-    public function testEndRoundEqual(): void
-    {
-        $this->game->endRound();
-        $this->assertIsArray($this->game->getWonRounds());
-        $this->assertSame($this->game->getWonRounds()['human'], 0);
-        $this->assertSame($this->game->getWonRounds()['computer'], 1);
-    }
-
-    /**
-    * test that endRound when it's a draw increases winner's number of
-    * won rounds
-    */
-    public function testEndRoundNonEqual(): void
-    {
-        // only human has rolled
-        $this->game->rollHumanDice();
-        $this->game->endRound();
-        $this->assertSame($this->game->getWonRounds()['human'], 1);
-        $this->assertSame($this->game->getWonRounds()['computer'], 0);
-
-
-        // only computer has rolled
-        $this->game->newRound();
-        $this->game->autoPlay();
-        $this->game->endRound();
-        $this->assertSame($this->game->getWonRounds()['human'], 1);
-        $this->assertSame($this->game->getWonRounds()['computer'], 1);
-
-        // computer overshoots 21
-        $this->game->newRound();
-        rand(-1, 5);
-        for ($i = 0; $i < 2; $i++) {
-            $this->game->rollHumanDice();
-        }
-        $this->game->autoPlay();
-        $this->game->endRound();
-        $this->assertSame($this->game->getWonRounds()['human'], 2);
-        $this->assertSame($this->game->getWonRounds()['computer'], 1);
-    }
-
-    /**
-    * getWinnerName returns correct name
-    */
-    public function testGetWinnerName(): void
-    {
-        // only human has rolled
-        $this->game->rollHumanDice();
-        $this->assertSame("You", $this->game->getWinnerName());
-
-
-        // only computer has rolled
-        $this->game->newRound();
-        $this->game->autoPlay();
-        $this->game->endRound();
-        $this->assertSame("Computer", $this->game->getWinnerName());
-
-        // computer overshoots 21
-        $this->game->newRound();
-        rand(-1, 5);
-        for ($i = 0; $i < 2; $i++) {
-            $this->game->rollHumanDice();
-        }
-        $this->game->autoPlay();
-        $this->assertSame("You", $this->game->getWinnerName());
-    }
-
-    /**
-    * roundHasEnded works
-    */
-    public function testRoundHasEnded(): void
-    {
-        $this->game->rollHumanDice();
-        $this->game->endRound();
-
-        $this->assertTrue($this->game->roundHasEnded());
     }
 }

@@ -5,5 +5,5 @@ old_files/
 .phpunit.result.cache
 build/
 *.env
-.env.local-mysql
+.env.localmysql
 .env.dbwebb

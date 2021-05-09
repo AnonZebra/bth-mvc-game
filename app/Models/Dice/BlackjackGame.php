@@ -103,7 +103,6 @@ class BlackjackGame
     public function roundToDb()
     {
         $scores = $this->getScores();
-
         $dbSession = DbGameSession::create(
             ['game_type' => 'blackjack']
         );

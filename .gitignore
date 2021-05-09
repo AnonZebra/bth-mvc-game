@@ -7,3 +7,4 @@ build/
 *.env
 .env.localmysql
 .env.dbwebb
+.env.localsqlite

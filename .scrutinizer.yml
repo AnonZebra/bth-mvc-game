@@ -5,14 +5,15 @@ filter:
     excluded_paths: [vendor/*, test/*]
 
 build:
-    before:
-      - 'cp .env.scrutinizer .env'
     nodes:
         my-tests:
             environment:
                 php:
                     version: 7.4
     tests:
+        before:
+          - 'cp .env.scrutinizer .env'
+          - 'php artisan migrate --force ---v'
         override:
             -
                 command: "make phpunit"

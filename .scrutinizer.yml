@@ -15,8 +15,10 @@ build:
           - 'cp .env.scrutinizer .env'
           - 'php artisan migrate --force ---v'
         override:
+            - php-scrutinizer-run
             -
                 command: "make phpunit"
                 coverage:
                     file: "build/coverage.clover"
                     format: "php-clover"
+          

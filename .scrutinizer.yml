@@ -1,0 +1,21 @@
+imports:
+    - php
+
+filter:
+    excluded_paths: [vendor/*, test/*]
+
+build:
+    before:
+      - 'cp .env.scrutinizer .env'
+    nodes:
+        my-tests:
+            environment:
+                php:
+                    version: 7.4
+    tests:
+        override:
+            -
+                command: "make phpunit"
+                coverage:
+                    file: "build/coverage.clover"
+                    format: "php-clover"

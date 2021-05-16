@@ -5,7 +5,7 @@ php:
 
 install:
   - composer self-update
-  - composer install --prefer-source --no-interaction
+  - composer install --no-interaction
 
 services:
   - mysql
@@ -18,6 +18,8 @@ cache:
 before_script:
 - cp .env.travis .env
 - mysql -e 'CREATE DATABASE IF NOT EXISTS laravel_db;'
+# force flag necessary to avoid request from Laravel to confirm migrate
+- php artisan migrate --env=production --force -vvv
 
 script: 
 - make install test

@@ -1,4 +1,9 @@
 <?php
+if (gethostname() == 'Lowe.local') {
+    copy('../.env.localmysql', '../.env');
+} elseif (gethostname() == 'websrv13') {
+    copy('../.env.dbwebb', '../.env');
+}
 
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;

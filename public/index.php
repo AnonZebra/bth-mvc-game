@@ -1,7 +1,7 @@
 <?php
 if (gethostname() == 'Lowe.local') {
     copy('../.env.localmysql', '../.env');
-} elseif (gethostname() == 'websrv13') {
+} elseif (substr(gethostname(), 0, 6) == 'websrv') {
     copy('../.env.dbwebb', '../.env');
 }
 

@@ -12,8 +12,8 @@ build:
                     version: 7.4
     tests:
         before:
-          - 'cp .env.scrutinizer .env'
-          - 'php artisan migrate --force ---v'
+        #   - 'cp .env.scrutinizer .env'
+        #   - 'php artisan migrate --force ---v'
         override:
             - php-scrutinizer-run
             -

@@ -13,6 +13,7 @@ build:
     tests:
         before:
         - 'cp .env.scrutinizer .env'
+        - 'cp .env.scrutinizer .env.testing'
         #   - 'php artisan migrate --force ---v'
         override:
             - php-scrutinizer-run

@@ -12,7 +12,7 @@ use App\Http\Controllers\BlackjackController;
 
 class BlackjackControllerTest extends TestCase
 {
-    // use RefreshDatabase;
+    use RefreshDatabase;
     /**
     * blackjackShow uses correct view
     */

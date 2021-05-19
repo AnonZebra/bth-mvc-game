@@ -17,9 +17,14 @@ cache:
 
 before_script:
 - cp .env.travis .env
+# set up testing database described in .env.testing, in turn
+# specified for use by .phpunit.xml
+- mysql -e 'CREATE DATABASE IF NOT EXISTS gametest;'
+- mysql -e 'CREATE USER IF NOT EXISTS laraveltester IDENTIFIED BY "laraveltester"'
+- mysql -e 'GRANT ALL PRIVILEGES ON gametest.* TO laraveltester'
 - mysql -e 'CREATE DATABASE IF NOT EXISTS laravel_db;'
 # force flag necessary to avoid request from Laravel to confirm migrate
-- php artisan migrate --env=production --force -vvv
+- php artisan migrate --env=testing --force -vvv
 
 script: 
 - make install test
